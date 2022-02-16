@@ -1,5 +1,5 @@
 CFLAGS = -std=c++20
-LDFLAGS = -lstdc++ -lglfw -lGL 
+LDFLAGS = -lstdc++ -lSDL2
 	
 main:
 	gcc $(CFLAGS) src/*.cpp -o game.run $(LDFLAGS)

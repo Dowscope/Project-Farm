@@ -8,46 +8,39 @@ Screen::Screen(const int width, const int height):
 
 Screen::~Screen()
 {
-    glfwDestroyWindow(_mainWindow);
-    glfwTerminate();
+    SDL_DestroyRenderer(_mainRenderer);
+    SDL_DestroyWindow(_mainWindow);
 }
 
 bool Screen::initWindow()
 {
-    if (!glfwInit())
+    if (SDL_Init(SDL_INIT_EVERYTHING) != 0)
     {
-        std::cout << "SCREEN_H: GLFW did not initialize" << std::endl;
+        std::cout << "SCREEN_H: SDL did not initialize | " << SDL_GetError() << std::endl;
         return false;
     }
 
-    _mainWindow = glfwCreateWindow(_windowWidth, _windowHeight, "Project Farm", NULL, NULL);
+    _mainWindow = SDL_CreateWindow( "Project Farm", 
+                                    SDL_WINDOWPOS_CENTERED,
+                                    SDL_WINDOWPOS_CENTERED,
+                                    _windowWidth,
+                                    _windowHeight,
+                                    0);
     if (!_mainWindow)
     {
         std::cout << "SCREEN_H: GLFW Window did not initialize" << std::endl;
         return false;
     }
 
-    glfwMakeContextCurrent(_mainWindow);
-
-    glfwSwapInterval(1);
-    
     return true;
-}
-
-bool Screen::shouldWindowClose()
-{
-    return glfwWindowShouldClose(_mainWindow);
 }
 
 void Screen::clear()
 {
-    int width, height;
-    glfwGetFramebufferSize(_mainWindow, &width, &height);
-    glViewport(0,0,width,height);
-    glClear(GL_COLOR_BUFFER_BIT);
+    SDL_RenderClear(_mainRenderer);
 }
 
-void Screen::swapBuffers()
+void Screen::present()
 {
-    glfwSwapBuffers(_mainWindow);
+    SDL_RenderPresent(_mainRenderer);
 }

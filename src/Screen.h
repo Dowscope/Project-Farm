@@ -8,20 +8,22 @@
 class Screen
 {
 private:
-    int _windowWidth, _windowHeight;
+    int _windowWidth, _windowHeight, _tileSize;
     SDL_Window* _mainWindow;
     SDL_Renderer* _mainRenderer;
+    SDL_Surface* _tileSurface;
 public:
     bool hasInitialize = false;
 private:
+    bool _initWindow();
+    bool _initSurfaces();
 public:
-    Screen(const int width, const int height);
+    Screen(const int width, const int height, const int tileSize);
     ~Screen();
-    bool initWindow();
-    bool shouldWindowClose();
     void clear();
     void present();
-    void drawTriangle();
+
+    void drawTile(const int x, const int y, const int tileType);
 };
 
 #endif

@@ -4,10 +4,12 @@
 class Tile
 {
 private:
-  /* data */
 public:
-  Tile(/* args */);
+  Tile(int posX, int posY, int tileType);
   ~Tile();
+  
+  const int x, y;
+  int type;
 };
 
 
